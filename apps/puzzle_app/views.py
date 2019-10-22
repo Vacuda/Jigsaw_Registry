@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from apps.log_and_reg_app.models import User
-from apps.puzzle_app.models import Puzzle
+from apps.puzzle_app.models import Puzzle, Brand, Category
 
 def index(request):
     return render(request, 'puzzle_app/index.html')
@@ -50,19 +50,30 @@ def guided_picture(request, puzzle_id):
 
 def guided_brand(request, puzzle_id):
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(name=puzzle_id)[0],
+        "brands": Brand.objects.all()
     }
     return render(request, 'puzzle_app/guided_brand.html', context)
 
 def guided_desc_notes(request, puzzle_id):
+    print("yellow")
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
     }
     return render(request, 'puzzle_app/guided_desc_notes.html', context)
 
 def guided_categories(request, puzzle_id):
+    #find unused categories to pass in context
+    c=Category.objects.all()
+    p=Puzzle.objects.filter(id=puzzle_id)[0].categories.all()
+    for catc in c:
+        for catp in p:
+            if catc.id == catp.id:
+                c = c.exclude(id=catc.id)
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "used_categories": Puzzle.objects.filter(id=puzzle_id)[0].categories.all(),
+        "unused_categories": c
     }
     return render(request, 'puzzle_app/guided_categories.html', context)
 
@@ -86,7 +97,7 @@ def guided_owned(request, puzzle_id):
 
 def guided_completion(request, puzzle_id):
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
     }
     return render(request, 'puzzle_app/guided_completion.html', context)
 
@@ -94,13 +105,13 @@ def guided_completion(request, puzzle_id):
 
 def guided_picture_post(request, puzzle_id):
 
-    #upload picture
+    print(request.POST)
 
     return redirect(f'/puzzles/guided/{puzzle_id}/brand')
 
 def guided_brand_post(request, puzzle_id):
     c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.brand = request.POST['brand']
+    c.brand = Brand.objects.filter(id=request.POST['brand'])[0]
     c.save()
     return redirect(f'/puzzles/guided/{puzzle_id}/desc_notes')
 
@@ -114,8 +125,8 @@ def guided_desc_notes_post(request, puzzle_id):
 
 def guided_categories_post(request, puzzle_id):
     c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.categories
-    return redirect(f'/puzzles/guided/{puzzle_id}/measures')
+    c.categories.add(Category.objects.filter(id=request.POST['category'])[0])
+    return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
 def guided_measures_post(request, puzzle_id):
     c = Puzzle.objects.filter(id=puzzle_id)[0]
@@ -151,3 +162,17 @@ def guided_completion_post(request, puzzle_id):
 
 
 ######## Full list puzzle info
+
+
+
+
+
+######## Category and Brand create
+
+def category_create(request, puzzle_id):
+    Category.objects.create(name=request.POST['added_category'])
+    return redirect(f'/puzzles/guided/{puzzle_id}/categories')
+
+def brand_create(request, puzzle_id):
+    Brand.objects.create(name=request.POST['added_brand'])
+    return redirect(f'/puzzles/guided/{puzzle_id}/brand')
