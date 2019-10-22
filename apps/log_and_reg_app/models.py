@@ -31,19 +31,6 @@ class UserManager(models.Manager):
             elif len(postdata['last_name']) == 1:
                 errors['last_name'] = "Needs to be longer than 1 character"
 
-        ##birth_date
-        DATE_REGEX = re.compile(r'^[0-9-]+-[0-9-]+-[0-9-]+$')
-        if not DATE_REGEX.match(postdata['birth_date']): 
-            errors['birth_date'] = "Invalid Date!"
-        else:
-            bday=datetime.strptime(postdata['birth_date'],'%Y-%m-%d')
-            today=datetime.today()
-            difference = today - bday
-            if bday > today:
-                errors['birth_date'] = "You aren't born in the future..."
-            # elif difference < 13:        doesn't work...
-            #     errors['birth_date'] = "You are too young!"
-
         ##email
         if len(postdata['email']) == 0:
             errors['email'] = "Email required"
@@ -73,7 +60,6 @@ class User(models.Model):
     username=models.CharField(max_length=30)
     first_name=models.CharField(max_length=30)
     last_name=models.CharField(max_length=30)
-    birth_date=models.DateTimeField()
     email=models.CharField(max_length=50)
     password=models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)

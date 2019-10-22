@@ -6,33 +6,33 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
-    <link rel="stylesheet" href="{% static 'home_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'puzzle_app/css/style.css' %}">
 
-    <title>The Jigsaw Registry</title>
+    <title>The Jigsaw Registry - Puzzles</title>
 </head>
 <body>
     <div class="container">
 
-        <h1>Home Page</h1>
+        <form action="/puzzles/create" method="POST"> {% csrf_token %}
 
-        <h1><a href="/puzzles/add">Add Puzzle</a></h1>
-        <h1><a href="/projects/add">Add Project</a></h1>
+            <table>
+                <tr>
+                    <td class="table_name">Title:</td>
+                    <td class="table_input"><input type="text" name="title"></td>
+                </tr>
+                <tr>
+                    <td class="table_name">Pieces:</td>
+                    <td class="table_input"><input type="number" name="pieces_labeled"></td>
+                </tr>
+                <tr>
+                    <td class="table_name"></td>
+                    <td class="table_input">
+                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                    </td>
+                </tr>
 
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </table>
+        </form>
 
 
     </div>

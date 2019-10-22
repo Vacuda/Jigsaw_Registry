@@ -17,22 +17,22 @@ class Category(models.Model):
 
 class Puzzle(models.Model):
     title               = models.CharField(max_length=30)
-    brand               = models.ForeignKey(Brand, related_name="puzzles")
-    picture             = models.ImageField()
-    desc                = models.TextField(max_length=100)
+    brand               = models.ForeignKey(Brand, related_name="puzzles", null=True)
+    picture             = models.ImageField(null=True)
+    desc                = models.TextField(max_length=100, blank=True)
     category            = models.ManyToManyField(Category, related_name="puzzles")
 
     pieces_labeled      = models.PositiveSmallIntegerField()
     pieces_actual       = models.PositiveSmallIntegerField()
-    length              = models.DecimalField(max_digits=4, decimal_places=2)
-    height              = models.DecimalField(max_digits=4, decimal_places=2)
+    length              = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    height              = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     owned_by            = models.ForeignKey(User, related_name="puzzles")
-    missing_pieces      = models.PositiveSmallIntegerField()
-    notes               = models.TextField(max_length=100)
-    owned               = models.BooleanField(default=False)
-    completions         = models.PositiveSmallIntegerField()
-    initial_complete    = models.DateTimeField()
+    missing_pieces      = models.PositiveSmallIntegerField(default=0)
+    notes               = models.TextField(max_length=100, blank=True)
+    owned               = models.BooleanField(default=True)
+    completions         = models.PositiveSmallIntegerField(default=0)
+    initial_complete    = models.DateTimeField(null=True)
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
     #projects

@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'log_and_reg_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
+    <link rel="stylesheet" href="{% static 'puzzle_app/css/style.css' %}">
 
-    <title>Login & Registration - Adam Sikora</title>
+    <title>The Jigsaw Registry - Puzzles</title>
 </head>
 <body>
     <div class="container">
 
-        <h1>Success!</h1>
+      <h1>Success!</h1>
+      <h6>{{puzzle.title}}</h6>
+      <p>{{puzzle.pieces_labelled}}</p>
 
-        <h3>Logged in User: {{request.session.user_id}}</h3>
-        <h3>Name: {{request.session.first_name}}</h3>
+      <h4>Add more info:</h4>
+      <a href="/puzzles/guided/{{puzzle.id}}/picture">Guided!</a>
+      <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
 
-        <a href="/logout">Log Out</a>
 
     </div>
 

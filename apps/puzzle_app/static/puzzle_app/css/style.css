@@ -1,9 +1,9 @@
-* {
+/* * {
     margin: 0;
     border: 0;
     box-sizing: border-box;
     vertical-align: top;
-    /* outline: 1px dotted red; */
+    outline: 1px dotted red;
     color: black;
     font-family: Verdana, Geneva, Tahoma, sans-serif
 }
@@ -12,9 +12,9 @@
     width: 970px;
     height: 900px;
     margin: 0 auto;
-    font-size: 0px;
+
     background-color: yellowgreen;
-}
+} */
 
 
 

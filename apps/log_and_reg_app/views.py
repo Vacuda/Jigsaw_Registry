@@ -14,7 +14,7 @@ def register(request):
         if len(errors) > 0:
             for key, value in errors.items():
                 messages.error(request, value, extra_tags=key)
-            return redirect('/')
+            return redirect('/login')
         ##If No Errors
         else:
             ##Hash Password
@@ -32,8 +32,8 @@ def register(request):
             #Create Session
             request.session['user_id']=User.objects.last().id
             request.session['first_name']=User.objects.last().first_name
-            return redirect('/success')
-    return redirect('/')
+            return redirect('/login/success')
+    return redirect('/login')
 
 def login(request):
     if request.method=="POST":
@@ -45,19 +45,19 @@ def login(request):
             if bcrypt.checkpw(request.POST['password'].encode(), user[0].password.encode()):
                 request.session['user_id']=user[0].id
                 request.session['first_name']=user[0].first_name
-                return redirect('/success')
+                return redirect('/login/success')
         #No User Match, or No Password Match
         messages.error(request, "Email or Password is not correct", extra_tags="login")
-        return redirect('/')
-    return redirect('/')
+        return redirect('/login')
+    return redirect('/login')
 
 def success(request):
     if not 'user_id' in request.session:
         messages.error(request, "You are not logged in!", extra_tags="login")
-        return redirect('/')
+        return redirect('/login')
     return render(request,'home_app/index.html')
     
 def reset(request):  
     del request.session['first_name']
     del request.session['user_id']
-    return redirect('/')
+    return redirect('/login')
