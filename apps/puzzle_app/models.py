@@ -20,7 +20,7 @@ class Puzzle(models.Model):
     brand               = models.ForeignKey(Brand, related_name="puzzles", null=True)
     picture             = models.ImageField(null=True)
     desc                = models.TextField(max_length=100, blank=True)
-    category            = models.ManyToManyField(Category, related_name="puzzles")
+    categories          = models.ManyToManyField(Category, related_name="puzzles")
 
     pieces_labeled      = models.PositiveSmallIntegerField()
     pieces_actual       = models.PositiveSmallIntegerField()
