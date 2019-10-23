@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from apps.log_and_reg_app.models import User
-from apps.puzzle_app.models import Puzzle, Brand, Category
+from apps.puzzle_app.models import Puzzle, Brand, Category, PuzzleImage
 
 def index(request):
     return render(request, 'puzzle_app/index.html')
@@ -64,7 +64,8 @@ def guided_title(request, puzzle_id):
 
 def guided_picture(request, puzzle_id):
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "images": PuzzleImage.objects.all()
     }
     return render(request, 'puzzle_app/guided_picture.html', context)
 
@@ -142,7 +143,13 @@ def guided_title_post(request, puzzle_id):
 
 def guided_picture_post(request, puzzle_id):
 
-    print(request.POST)
+    # cropped_picture = 
+    # Uploads Picture
+    PuzzleImage.objects.create(image = request.FILES['picture'])
+
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.picture = PuzzleImage.objects.last()
+    p.save()
 
     return redirect(f'/puzzles/guided/{puzzle_id}/picture')
 

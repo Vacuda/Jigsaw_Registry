@@ -15,10 +15,16 @@ class Category(models.Model):
     updated_at          = models.DateTimeField(auto_now=True)
     #puzzles
 
+class PuzzleImage(models.Model):
+    image               = models.ImageField(upload_to='puzzle_images')
+    created_at          = models.DateTimeField(auto_now_add=True)
+    updated_at          = models.DateTimeField(auto_now=True)
+    #puzzle
+
 class Puzzle(models.Model):
     title               = models.CharField(max_length=30)
     brand               = models.ForeignKey(Brand, related_name="puzzles", null=True)
-    picture             = models.ImageField(null=True)
+    picture             = models.OneToOneField(PuzzleImage, on_delete=models.CASCADE, related_name="puzzle", null=True)
     desc                = models.TextField(max_length=100, blank=True)
     categories          = models.ManyToManyField(Category, related_name="puzzles")
 

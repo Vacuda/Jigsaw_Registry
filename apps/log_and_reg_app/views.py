@@ -25,7 +25,6 @@ def register(request):
                 username        = request.POST['username'],
                 first_name      = request.POST['first_name'],
                 last_name       = request.POST['last_name'],
-                birth_date      = request.POST['birth_date'],
                 email           = request.POST['email'],
                 password        = pw_hash,
                 )
