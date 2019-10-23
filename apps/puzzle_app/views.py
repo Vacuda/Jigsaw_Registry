@@ -40,7 +40,7 @@ def success_create_puzzle(request, puzzle_id):
     return render(request, 'puzzle_app/puzzle_create_success_page.html',context)
 
 
-######## Guided puzzle info
+######## Guided puzzle pages
 
 def guided_picture(request, puzzle_id):
     context = {
@@ -50,13 +50,12 @@ def guided_picture(request, puzzle_id):
 
 def guided_brand(request, puzzle_id):
     context = {
-        "puzzle": Puzzle.objects.filter(name=puzzle_id)[0],
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
         "brands": Brand.objects.all()
     }
     return render(request, 'puzzle_app/guided_brand.html', context)
 
 def guided_desc_notes(request, puzzle_id):
-    print("yellow")
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
     }
@@ -90,8 +89,13 @@ def guided_pieces(request, puzzle_id):
     return render(request, 'puzzle_app/guided_pieces.html', context)
 
 def guided_owned(request, puzzle_id):
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
+        c = "Owned"
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == False:
+        c = "On the Wishlist"
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "ownage": c,
     }
     return render(request, 'puzzle_app/guided_owned.html', context)
 
@@ -101,61 +105,67 @@ def guided_completion(request, puzzle_id):
     }
     return render(request, 'puzzle_app/guided_completion.html', context)
 
-######## Guided puzzle info - POST POST POST POST POST POST POST POST POST POST
+######## Guided puzzle changes - POST POST POST POST POST POST GET POST
 
 def guided_picture_post(request, puzzle_id):
 
     print(request.POST)
 
-    return redirect(f'/puzzles/guided/{puzzle_id}/brand')
+    return redirect(f'/puzzles/guided/{puzzle_id}/picture')
 
 def guided_brand_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.brand = Brand.objects.filter(id=request.POST['brand'])[0]
-    c.save()
-    return redirect(f'/puzzles/guided/{puzzle_id}/desc_notes')
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.brand = Brand.objects.filter(id=request.POST['brand'])[0]
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/brand')
 
 def guided_desc_notes_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.desc = request.POST['desc']
-    c.save()
-    c.notes = request.POST['notes']
-    c.save()
-    return redirect(f'/puzzles/guided/{puzzle_id}/categories')
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.desc = request.POST['desc']
+    p.save()
+    p.notes = request.POST['notes']
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/desc_notes')
 
 def guided_categories_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.categories.add(Category.objects.filter(id=request.POST['category'])[0])
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.categories.add(Category.objects.filter(id=request.POST['category'])[0])
     return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
 def guided_measures_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.length = request.POST['length']
-    c.save()
-    c.height = request.POST['height']
-    c.save()
-    return redirect(f'/puzzles/guided/{puzzle_id}/pieces')
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.width = float(request.POST['width'])
+    p.save()
+    p.height = float(request.POST['height'])
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/measures')
 
 def guided_pieces_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.pieces_actual = request.POST['pieces_actual']
-    c.save()
-    c.missing_pieces = request.POST['missing_pieces']
-    c.save()
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.pieces_actual = request.POST['pieces_actual']
+    p.save()
+    p.missing_pieces = request.POST['missing_pieces']
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/pieces')
+
+def guided_owned_get(request, puzzle_id):
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.owned = True
+    p.save()
     return redirect(f'/puzzles/guided/{puzzle_id}/owned')
 
-def guided_owned_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.owned = request.POST['owned']
-    c.save()
-    return redirect(f'/puzzles/guided/{puzzle_id}/completion')
+def guided_not_owned_get(request, puzzle_id):
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.owned = False
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/owned')
 
 def guided_completion_post(request, puzzle_id):
-    c = Puzzle.objects.filter(id=puzzle_id)[0]
-    c.completions = request.POST['completions']
-    c.save()
-    c.initial_complete = request.POST['initial_complete']
-    c.save()
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.completions = request.POST['completions']
+    p.save()
+    p.initial_complete = request.POST['initial_complete']
+    p.save()
     return redirect(f'/puzzles/view/{puzzle_id}')
 
 
@@ -173,6 +183,25 @@ def category_create(request, puzzle_id):
     Category.objects.create(name=request.POST['added_category'])
     return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
+def category_remove(request, puzzle_id):
+    print(request.POST['removed_category'])
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    c = Category.objects.filter(name=request.POST['removed_category'])[0]
+    print(p)
+    print(c)
+    p.categories.remove(c)
+    return redirect(f'/puzzles/guided/{puzzle_id}/categories')
+
+def category_delete(request, puzzle_id):
+    # p = Puzzle.objects.filter(id=puzzle_id)[0]
+    # c = Category.objects.filter(name=request.POST['remove_category'])
+    # p.categories.remove(c)
+    return redirect(f'/puzzles/guided/{puzzle_id}/categories')
+
 def brand_create(request, puzzle_id):
     Brand.objects.create(name=request.POST['added_brand'])
+    return redirect(f'/puzzles/guided/{puzzle_id}/brand')
+
+def brand_delete(request, puzzle_id):
+    # Brand.objects.create(name=request.POST['added_brand'])
     return redirect(f'/puzzles/guided/{puzzle_id}/brand')

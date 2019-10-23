@@ -13,13 +13,23 @@
 <body>
     <div class="container">
 
-      <h1>Success!</h1>
-      <h6>{{puzzle.title}}</h6>
-      <p>{{puzzle.pieces_labelled}}</p>
+            <h1>Actual Pieces:</h1>
+            <form action="/puzzles/guided/{{puzzle.id}}/pieces_post" method="POST"> {% csrf_token %}
+                <label for="pieces_actual">Actual Pieces:</label>
+                <input type="number" name="pieces_actual" id="pieces_actual" value="{{puzzle.pieces_actual}}">
+                <label for="missing_pieces">Missing Pieces:</label>
+                <input type="number" name="missing_pieces" id="missing_pieces" value="{{puzzle.missing_pieces}}">
 
-      <h4>Add more info:</h4>
-      <a href="/puzzles/guided/{{puzzle.id}}/picture">Guided!</a>
-      <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+                <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+            </form>
+
+
+
+
+      
+        <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/owned">Next</a>
+        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+
 
 
     </div>

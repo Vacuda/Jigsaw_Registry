@@ -24,6 +24,7 @@
                 </select>
                 <button type="submit" class="btn btn-lg btn-warning">Submit</button>
             </form>
+            <h2>Brand: {{puzzle.brand.name}}</h2>
             <h3>ADD BRAND:</h3>
             <form action="/puzzles/guided/{{puzzle.id}}/brand_create" method="POST"> {% csrf_token %}
                 <input type="text" name="added_brand">

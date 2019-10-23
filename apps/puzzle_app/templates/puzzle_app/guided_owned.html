@@ -13,14 +13,17 @@
 <body>
     <div class="container">
 
-      <h1>Success!</h1>
-      <h6>{{puzzle.title}}</h6>
-      <p>{{puzzle.pieces_labelled}}</p>
+        <h1>Do you own this puzzle?</h1>
+        <a class="btn btn-lg btn-warning" href="/puzzles/guided/{{puzzle.id}}/owned_get">Owned</a>
+        <h1>Or should we add it to the wishlist?</h1>
+        <a class="btn btn-lg btn-warning" href="/puzzles/guided/{{puzzle.id}}/not_owned_get">Not Owned</a>
 
-      <h4>Add more info:</h4>
-      <a href="/puzzles/guided/{{puzzle.id}}/picture">Guided!</a>
-      <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+        {{ownage}}
 
+        <br>
+      
+        <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/desc_notes">Next</a>
+        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
 
     </div>
 

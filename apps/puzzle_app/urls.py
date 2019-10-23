@@ -28,10 +28,17 @@ urlpatterns=[
     url(r'^guided/(?P<puzzle_id>[0-9]+)/categories_post$', views.guided_categories_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/measures_post$', views.guided_measures_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/pieces_post$', views.guided_pieces_post),
-    url(r'^guided/(?P<puzzle_id>[0-9]+)/owned_post$', views.guided_owned_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/completion_post$', views.guided_completion_post),
     
-    ## Guided -creates-
-    url(r'^guided/(?P<puzzle_id>[0-9]+)/category_create$', views.category_create),
+    ## Guided -gets- (OWNED)
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/owned_get$', views.guided_owned_get),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/not_owned_get$', views.guided_not_owned_get),
+
+    ## Guided -creates- / -removes- / -deletes
     url(r'^guided/(?P<puzzle_id>[0-9]+)/brand_create$', views.brand_create),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/brand_delete$', views.brand_delete),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/category_create$', views.category_create),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/category_remove$', views.category_remove),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/category_delete$', views.category_delete),
+    
     ]

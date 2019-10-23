@@ -13,13 +13,22 @@
 <body>
     <div class="container">
 
-      <h1>Success!</h1>
-      <h6>{{puzzle.title}}</h6>
-      <p>{{puzzle.pieces_labelled}}</p>
+            <h1>Measures:</h1>
+            <form action="/puzzles/guided/{{puzzle.id}}/measures_post" method="POST"> {% csrf_token %}
+                <label for="width">Width:</label>
+                <input type="number" name="width" step="0.01" id="width" value="{{puzzle.width}}">
+                <label for="height">Height:</label>
+                <input type="number" name="height" step="0.01" id="height" value="{{puzzle.height}}">
 
-      <h4>Add more info:</h4>
-      <a href="/puzzles/guided/{{puzzle.id}}/picture">Guided!</a>
-      <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+                <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+            </form>
+
+
+
+
+      
+        <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/pieces">Next</a>
+        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
 
 
     </div>

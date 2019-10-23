@@ -25,7 +25,12 @@
             </form>
             <ul>
             {% for category in used_categories %}
-                <li>{{category.name}}</li>
+                <li>{{category.name}}
+                    <form action="/puzzles/guided/{{puzzle.id}}/category_remove" method="POST"> {% csrf_token %}
+                        <input type="hidden" name="removed_category" value="{{category.name}}">
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    </form>
+                </li>
             {% endfor %}
             </ul>
             <h3>ADD CATEGORY:</h3>

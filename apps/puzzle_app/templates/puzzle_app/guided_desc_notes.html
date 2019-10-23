@@ -13,18 +13,15 @@
 <body>
     <div class="container">
 
-         <h1>Add Desc NOtes:</h1>
+         <h1>Add Desc Notes:</h1>
             <form action="/puzzles/guided/{{puzzle.id}}/desc_notes_post" method="POST"> {% csrf_token %}
                 <label for="desc">Short Description:</label>
-                <input type="textarea" name="desc" id="desc">
+                <input type="textarea" name="desc" id="desc" value="{{puzzle.desc}}">
                 <label for="notes">Additional Notes:</label>
-                <input type="textarea" name="notes" id="notes">
+                <input type="textarea" name="notes" id="notes" value="{{puzzle.notes}}">
                 <button type="submit" class="btn btn-lg btn-warning">Submit</button>
             </form>
 
-        {% for i in brands %}
-
-        {% puzzle.title %}
         <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/categories">Next</a>
         <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
 

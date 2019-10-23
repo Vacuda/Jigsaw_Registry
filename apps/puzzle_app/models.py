@@ -24,7 +24,7 @@ class Puzzle(models.Model):
 
     pieces_labeled      = models.PositiveSmallIntegerField()
     pieces_actual       = models.PositiveSmallIntegerField()
-    length              = models.DecimalField(max_digits=4, decimal_places=2, null=True)
+    width               = models.DecimalField(max_digits=4, decimal_places=2, null=True)
     height              = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
     owned_by            = models.ForeignKey(User, related_name="puzzles")
