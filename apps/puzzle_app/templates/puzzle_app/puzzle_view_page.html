@@ -13,13 +13,91 @@
 <body>
     <div class="container">
 
-      
+      <table>
+            <tr>
+                <td>Title:</td>
+                <td>{{puzzle.title}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/title">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Pieces(labeled):</td>
+                <td>{{puzzle.pieces_labeled}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/title">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Picture:</td>
+                <td></td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/picture">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Brand:</td>
+                <td>{{puzzle.brand}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/brand">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td>{{puzzle.desc}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/desc_notes">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Notes:</td>
+                <td>{{puzzle.notes}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/desc_notes">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Categories:</td>
+                <td>
+                    <ul>
+                        {% for category in puzzle.categories.all %}
+                            <li>{{category.name}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/categories">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Measurements:</td>
+                <td>{{puzzle.width}} in. x {{puzzle.height}} in.</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/measures">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Actual Piece Count:</td>
+                <td>{{puzzle.pieces_actual}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/pieces">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Missing Pieces:</td>
+                <td>{{puzzle.missing_pieces}} missing pieces</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/pieces">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Ownership of Puzzle:</td>
+                <td>{{ownage}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/owned">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Completion:</td>
+                <td>{{completed}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/completion">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Completions:</td>
+                <td>{{puzzle.completions}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/completion">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Initial Completion:</td>
+                <td>{{initial}}</td>
+                <td><a href="/puzzles/guided/{{puzzle.id}}/completion">Edit</a></td>
+            </tr>
 
-        <h1>puzzle view ID: {{puzzle.id}}</h1>
 
 
 
 
+
+
+      </table>
 
 
 

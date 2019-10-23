@@ -13,14 +13,31 @@
 <body>
     <div class="container">
 
-      <h1>Success!</h1>
-      <h6>{{puzzle.title}}</h6>
-      <p>{{puzzle.pieces_labelled}}</p>
+        <h1>Completion:</h1>
+        <h3>Have you completed this puzzle before?</h3>
+        <a class="btn btn-lg btn-warning" href="/puzzles/guided/{{puzzle.id}}/completed_get">Yes</a>
+        <a class="btn btn-lg btn-warning" href="/puzzles/guided/{{puzzle.id}}/not_completed_get">No</a>
+        <ul>
+            <li>{{completed}}</li>
+        </ul>
+        <h3>How many times have you completed it?</h3>
 
-      <h4>Add more info:</h4>
-      <a href="/puzzles/guided/{{puzzle.id}}/picture">Guided!</a>
-      <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
 
+            <form action="/puzzles/guided/{{puzzle.id}}/completion_post" method="POST"> {% csrf_token %}
+
+                <input type="number" name="completions" value="{{puzzle.completions}}">
+
+                <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+            </form>
+        <ul>
+            {% if puzzle.completions == 1 %}
+                <li>{{puzzle.completions}} Completion</li>
+            {% else %}
+                <li>{{puzzle.completions}} Completions</li>
+            {% endif %}
+        </ul>
+
+        <a class="btn btn-sm btn-dark" href="/puzzles/view/{{puzzle.id}}">Done!</a>
 
     </div>
 

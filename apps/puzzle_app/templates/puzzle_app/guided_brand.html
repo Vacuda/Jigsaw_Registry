@@ -16,9 +16,15 @@
       <h1>Brand:</h1>
             <form action="/puzzles/guided/{{puzzle.id}}/brand_post" method="POST"> {% csrf_token %}
                 <select name="brand" id="brand">
-                        <option value="" disabled selected>------</option>
+                        <option value="" disabled>------</option>
                     {% for brand in brands %}
-                        <option value="{{brand.id}}">{{brand.name}}</option>
+                        <option value="{{brand.id}}"
+                        
+                        {% if puzzle.brand.name == brand.name %}
+                            selected
+                        {% endif %}
+                        
+                        >{{brand.name}}</option>
                     {% endfor %}
                     <option value=""></option>
                 </select>
@@ -35,7 +41,7 @@
 
       
         <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/desc_notes">Next</a>
-        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+        <a href="/puzzles/view/{{puzzle.id}}">Full List!</a>
 
 
     </div>

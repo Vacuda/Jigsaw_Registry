@@ -6,9 +6,23 @@ def index(request):
     return render(request, 'puzzle_app/index.html')
 
 def view_puzzle(request, puzzle_id):
-
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
+        ownage = "Owned"
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == False:
+        ownage = "On Wishlist"
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == False:
+        completed = "Not Completed"
+        initial = "Not Completed"
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == True:
+        completed = "Completed!"
+        p = Puzzle.objects.filter(id=puzzle_id)[0]
+        if p.initial_complete == None:
+            initial = "Completed prior to entry!"
     context = {
-        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "ownage": ownage,
+        "completed": completed,
+        "initial": initial,
     }
     return render(request, 'puzzle_app/puzzle_view_page.html', context)
 
@@ -41,6 +55,12 @@ def success_create_puzzle(request, puzzle_id):
 
 
 ######## Guided puzzle pages
+
+def guided_title(request, puzzle_id):
+    context = {
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0]
+    }
+    return render(request, 'puzzle_app/guided_title.html', context)
 
 def guided_picture(request, puzzle_id):
     context = {
@@ -92,7 +112,7 @@ def guided_owned(request, puzzle_id):
     if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
         c = "Owned"
     if Puzzle.objects.filter(id=puzzle_id)[0].owned == False:
-        c = "On the Wishlist"
+        c = "On Wishlist"
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
         "ownage": c,
@@ -100,12 +120,25 @@ def guided_owned(request, puzzle_id):
     return render(request, 'puzzle_app/guided_owned.html', context)
 
 def guided_completion(request, puzzle_id):
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == False:
+        c = "Not Completed"
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == True:
+        c = "Completed!"
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "completed": c,
     }
     return render(request, 'puzzle_app/guided_completion.html', context)
 
 ######## Guided puzzle changes - POST POST POST POST POST POST GET POST
+
+def guided_title_post(request, puzzle_id):
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.title = request.POST['title']
+    p.save()
+    p.pieces_labeled = request.POST['pieces_labeled']
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/title')
 
 def guided_picture_post(request, puzzle_id):
 
@@ -142,9 +175,9 @@ def guided_measures_post(request, puzzle_id):
 
 def guided_pieces_post(request, puzzle_id):
     p = Puzzle.objects.filter(id=puzzle_id)[0]
-    p.pieces_actual = request.POST['pieces_actual']
+    p.pieces_actual = int(request.POST['pieces_actual'])
     p.save()
-    p.missing_pieces = request.POST['missing_pieces']
+    p.missing_pieces = int(request.POST['missing_pieces'])
     p.save()
     return redirect(f'/puzzles/guided/{puzzle_id}/pieces')
 
@@ -160,13 +193,32 @@ def guided_not_owned_get(request, puzzle_id):
     p.save()
     return redirect(f'/puzzles/guided/{puzzle_id}/owned')
 
+def guided_completed_get(request, puzzle_id):
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.completed = True
+    p.save()
+    if p.completions == 0:
+        p.completions = 1
+        p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/completion')
+
+def guided_not_completed_get(request, puzzle_id):
+    p = Puzzle.objects.filter(id=puzzle_id)[0]
+    p.completed = False
+    p.save()
+    p.completions = 0
+    print(p.completions)
+    p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/completion')
+
 def guided_completion_post(request, puzzle_id):
     p = Puzzle.objects.filter(id=puzzle_id)[0]
-    p.completions = request.POST['completions']
+    p.completions = int(request.POST['completions'])
     p.save()
-    p.initial_complete = request.POST['initial_complete']
-    p.save()
-    return redirect(f'/puzzles/view/{puzzle_id}')
+    if p.completions > 0:
+        p.completed = True
+        p.save()
+    return redirect(f'/puzzles/guided/{puzzle_id}/completion')
 
 
 

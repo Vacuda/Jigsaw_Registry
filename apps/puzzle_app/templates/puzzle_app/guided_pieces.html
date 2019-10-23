@@ -23,12 +23,21 @@
                 <button type="submit" class="btn btn-lg btn-warning">Submit</button>
             </form>
 
+            <h3>Actual Pieces:</h3>
+            <ul>
+                <li>{{puzzle.pieces_actual}}</li>
+            </ul>
+            <h3>Missing Pieces:</h3>
+            <ul>
+                <li>{{puzzle.missing_pieces}}</li>
+            </ul>
+
 
 
 
       
         <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/owned">Next</a>
-        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+        <a href="/puzzles/view/{{puzzle.id}}">Full List!</a>
 
 
 

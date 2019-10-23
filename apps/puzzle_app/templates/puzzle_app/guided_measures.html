@@ -23,12 +23,19 @@
                 <button type="submit" class="btn btn-lg btn-warning">Submit</button>
             </form>
 
-
+            <h3>Width:</h3>
+            <ul>
+                <li>{{puzzle.width}}</li>
+            </ul>
+            <h3>Height:</h3>
+            <ul>
+                <li>{{puzzle.height}}</li>
+            </ul>
 
 
       
         <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/pieces">Next</a>
-        <a href="/puzzles/full/{{puzzle.id}}">Full List!</a>
+        <a href="/puzzles/view/{{puzzle.id}}">Full List!</a>
 
 
     </div>

@@ -12,6 +12,7 @@ urlpatterns=[
     url(r'^create/(?P<puzzle_id>[0-9]+)/success$', views.success_create_puzzle),
     
     ## Guided -pages-
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/title$', views.guided_title),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/picture$', views.guided_picture),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/brand$', views.guided_brand),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/desc_notes$', views.guided_desc_notes),
@@ -22,6 +23,7 @@ urlpatterns=[
     url(r'^guided/(?P<puzzle_id>[0-9]+)/completion$', views.guided_completion),
 
     ## Guided -posts-
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/title_post$', views.guided_title_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/picture_post$', views.guided_picture_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/brand_post$', views.guided_brand_post),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/desc_notes_post$', views.guided_desc_notes_post),
@@ -33,6 +35,8 @@ urlpatterns=[
     ## Guided -gets- (OWNED)
     url(r'^guided/(?P<puzzle_id>[0-9]+)/owned_get$', views.guided_owned_get),
     url(r'^guided/(?P<puzzle_id>[0-9]+)/not_owned_get$', views.guided_not_owned_get),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/completed_get$', views.guided_completed_get),
+    url(r'^guided/(?P<puzzle_id>[0-9]+)/not_completed_get$', views.guided_not_completed_get),
 
     ## Guided -creates- / -removes- / -deletes
     url(r'^guided/(?P<puzzle_id>[0-9]+)/brand_create$', views.brand_create),

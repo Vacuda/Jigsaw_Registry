@@ -13,26 +13,30 @@
 <body>
     <div class="container">
 
-         <h1>Add Desc Notes:</h1>
-            <form action="/puzzles/guided/{{puzzle.id}}/desc_notes_post" method="POST"> {% csrf_token %}
-                <label for="desc">Short Description:</label>
-                <input type="textarea" name="desc" id="desc" value="{{puzzle.desc}}">
-                <label for="notes">Additional Notes:</label>
-                <input type="textarea" name="notes" id="notes" value="{{puzzle.notes}}">
+
+            <form action="/puzzles/guided/{{puzzle.id}}/title_post" method="POST"> {% csrf_token %}
+                <label for="title">Title:</label>
+                <input type="text" name="title" id="title" value="{{puzzle.title}}">
+                <label for="pieces_labeled">Pieces: (pieces labelled on box)</label>
+                <input type="number" name="pieces_labeled" id="pieces_labeled" value="{{puzzle.pieces_labeled}}">
+
                 <button type="submit" class="btn btn-lg btn-warning">Submit</button>
             </form>
 
-        <h3>Description:</h3>
+            <h3>Title:</h3>
             <ul>
-                <li>{{puzzle.desc}}</li>
+                <li>{{puzzle.title}}</li>
             </ul>
-        <h3>Notes:</h3>
-        <ul>
-            <li>{{puzzle.notes}}</li>
-        </ul>
+            <h3>Pieces: (on box)</h3>
+            <ul>
+                <li>{{puzzle.pieces_labeled}}</li>
+            </ul>
 
-        <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/categories">Next</a>
+
+      
+        <a class="btn btn-sm btn-dark" href="/puzzles/guided/{{puzzle.id}}/picture">Next</a>
         <a href="/puzzles/view/{{puzzle.id}}">Full List!</a>
+
 
     </div>
 

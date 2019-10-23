@@ -31,6 +31,7 @@ class Puzzle(models.Model):
     missing_pieces      = models.PositiveSmallIntegerField(default=0)
     notes               = models.TextField(max_length=100, blank=True)
     owned               = models.BooleanField(default=True)
+    completed           = models.BooleanField(default=False)
     completions         = models.PositiveSmallIntegerField(default=0)
     initial_complete    = models.DateTimeField(null=True)
     created_at          = models.DateTimeField(auto_now_add=True)
