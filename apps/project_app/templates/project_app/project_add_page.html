@@ -13,9 +13,22 @@
 <body>
     <div class="container">
 
-      
+        <form action="/puzzles/create" method="POST"> {% csrf_token %}
 
-        <h1>project add</h1>
+            <table>
+                <tr>
+                    <td class="table_name">Project Name:</td>
+                    <td class="table_input"><input type="text" name="title"></td>
+                </tr>
+
+            
+            <form action="/projects/picture_post" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                <input type="file" accept='image/*' name="picture">
+                <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+            </form>
+                <div class="thumbnail">
+                    <img src='{{puzzle.picture.image.url}}'>
+                </div>
 
 
 
@@ -26,8 +39,17 @@
 
 
 
+                <tr>
+                    <td class="table_name"></td>
+                    <td class="table_input">
+                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                    </td>
+                </tr>
 
+            </table>
+        </form>
 
+        <h1><a href="/">Home</a></h1>
 
 
     </div>

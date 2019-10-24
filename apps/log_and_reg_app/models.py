@@ -65,6 +65,11 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
+    #puzzles
+    #brands
+    #categories
+    #projects
+    #helpers
 
     def __repr__(self):
         return f"**User:{self.first_name}**"

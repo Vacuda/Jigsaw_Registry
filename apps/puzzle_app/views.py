@@ -38,16 +38,15 @@ def view_all(request):
 
 def add_puzzle_page(request):
 
-
     return render(request, 'puzzle_app/puzzle_add_page.html')
 
 def create_puzzle(request):
-
+    user=User.objects.filter(id=request.session['user_id'])
     Puzzle.objects.create(
         title           = request.POST['title'],
         pieces_labeled  = request.POST['pieces_labeled'],
         pieces_actual   = request.POST['pieces_labeled'],
-        owned_by        = User.objects.filter(id=request.session['user_id'])[0],
+        belongs_to      = user,
         )
 
     c=Puzzle.objects.last().id
@@ -73,14 +72,15 @@ def guided_title(request, puzzle_id):
 def guided_picture(request, puzzle_id):
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
-        "images": PuzzleImage.objects.all()
+        # "images": PuzzleImage.objects.all()
     }
     return render(request, 'puzzle_app/guided_picture.html', context)
 
 def guided_brand(request, puzzle_id):
+    user=User.objects.filter(id=request.session['user_id'])
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
-        "brands": Brand.objects.all()
+        "brands": Brand.objects.filter(belongs_to = user),
     }
     return render(request, 'puzzle_app/guided_brand.html', context)
 
@@ -91,8 +91,9 @@ def guided_desc_notes(request, puzzle_id):
     return render(request, 'puzzle_app/guided_desc_notes.html', context)
 
 def guided_categories(request, puzzle_id):
-    #find unused categories to pass in context
-    c=Category.objects.all()
+    #find unused categories to pass in context, that belond to user
+    user=User.objects.filter(id=request.session['user_id'])
+    c=Category.objects.filter(belongs_to = user)
     p=Puzzle.objects.filter(id=puzzle_id)[0].categories.all()
     for catc in c:
         for catp in p:
@@ -151,7 +152,6 @@ def guided_title_post(request, puzzle_id):
 
 def guided_picture_post(request, puzzle_id):
 
-    # cropped_picture = 
     # Uploads Picture
     PuzzleImage.objects.create(image = request.FILES['picture'])
 
@@ -236,26 +236,18 @@ def guided_completion_post(request, puzzle_id):
     return redirect(f'/puzzles/guided/{puzzle_id}/completion')
 
 
-
-
-######## Full list puzzle info
-
-
-
-
-
 ######## Category and Brand create
 
 def category_create(request, puzzle_id):
-    Category.objects.create(name=request.POST['added_category'])
+    Category.objects.create(
+        name        = request.POST['added_category'],
+        belongs_to  = User.objects.filter(id=request.session['user_id'])[0],
+        )
     return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
 def category_remove(request, puzzle_id):
-    print(request.POST['removed_category'])
     p = Puzzle.objects.filter(id=puzzle_id)[0]
     c = Category.objects.filter(name=request.POST['removed_category'])[0]
-    print(p)
-    print(c)
     p.categories.remove(c)
     return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
@@ -266,7 +258,10 @@ def category_delete(request, puzzle_id):
     return redirect(f'/puzzles/guided/{puzzle_id}/categories')
 
 def brand_create(request, puzzle_id):
-    Brand.objects.create(name=request.POST['added_brand'])
+    Brand.objects.create(
+        name        = request.POST['added_brand'],
+        belongs_to  = User.objects.filter(id=request.session['user_id'])[0],
+        )
     return redirect(f'/puzzles/guided/{puzzle_id}/brand')
 
 def brand_delete(request, puzzle_id):

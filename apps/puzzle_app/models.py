@@ -5,12 +5,14 @@ import re
 
 class Brand(models.Model):
     name                = models.CharField(max_length=30)
+    belongs_to          = models.ForeignKey(User, related_name="brands")
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
     #puzzles
 
 class Category(models.Model):
     name                = models.CharField(max_length=30)
+    belongs_to          = models.ForeignKey(User, related_name="categories")
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
     #puzzles
