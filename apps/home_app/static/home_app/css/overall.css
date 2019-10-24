@@ -10,10 +10,17 @@
 
 .container {
     width: 970px;
-    height: 900px;
+    min-height: 700px;
     margin: 0 auto;
     font-size: 15px;
     background-color: yellowgreen;
+}
+
+.card {
+    width: 30%;
+    display: inline-block;
+    margin: 10px auto;
+    background-color: brown;
 }
 
 

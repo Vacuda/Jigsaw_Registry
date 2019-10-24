@@ -24,7 +24,15 @@ def view_puzzle(request, puzzle_id):
         "completed": completed,
         "initial": initial,
     }
-    return render(request, 'puzzle_app/puzzle_view_page.html', context)
+    return render(request, 'puzzle_app/puzzle_edit_page.html', context)
+
+def view_all(request):
+
+    context = {
+        "puzzles": Puzzle.objects.filter(belongs_to=request.session['user_id']),
+    }
+
+    return render(request, 'puzzle_app/puzzle_view_all_page.html', context)
 
 #######Adding a puzzle
 

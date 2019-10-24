@@ -33,7 +33,7 @@ class Puzzle(models.Model):
     width               = models.DecimalField(max_digits=4, decimal_places=2, null=True)
     height              = models.DecimalField(max_digits=4, decimal_places=2, null=True)
 
-    owned_by            = models.ForeignKey(User, related_name="puzzles")
+    belongs_to          = models.ForeignKey(User, related_name="puzzles")
     missing_pieces      = models.PositiveSmallIntegerField(default=0)
     notes               = models.TextField(max_length=100, blank=True)
     owned               = models.BooleanField(default=True)

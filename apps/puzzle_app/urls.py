@@ -7,6 +7,7 @@ urlpatterns=[
     #/puzzles/
     url(r'^$', views.index),
     url(r'^view/(?P<puzzle_id>[0-9]+)$', views.view_puzzle),
+    url(r'^view/all$', views.view_all),
 
     ## Add puzzle
     url(r'^add$', views.add_puzzle_page),
