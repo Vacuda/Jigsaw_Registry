@@ -5,7 +5,7 @@ from apps.puzzle_app.models import Puzzle, Brand, Category, PuzzleImage
 def index(request):
     return render(request, 'puzzle_app/index.html')
 
-def view_puzzle(request, puzzle_id):
+def edit_puzzle(request, puzzle_id):
     if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
         ownage = "Owned"
     if Puzzle.objects.filter(id=puzzle_id)[0].owned == False:
@@ -26,6 +26,27 @@ def view_puzzle(request, puzzle_id):
     }
     return render(request, 'puzzle_app/puzzle_edit_page.html', context)
 
+def view_puzzle(request, puzzle_id):
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
+        ownage = "Owned"
+    if Puzzle.objects.filter(id=puzzle_id)[0].owned == False:
+        ownage = "On Wishlist"
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == False:
+        completed = "Not Completed"
+        initial = "Not Completed"
+    if Puzzle.objects.filter(id=puzzle_id)[0].completed == True:
+        completed = "Completed!"
+        p = Puzzle.objects.filter(id=puzzle_id)[0]
+        if p.initial_complete == None:
+            initial = "Completed prior to entry!"
+    context = {
+        "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
+        "ownage": ownage,
+        "completed": completed,
+        "initial": initial,
+    }
+    return render(request, 'puzzle_app/puzzle_view_page.html', context)
+
 def view_all(request):
 
     context = {
@@ -41,7 +62,7 @@ def add_puzzle_page(request):
     return render(request, 'puzzle_app/puzzle_add_page.html')
 
 def create_puzzle(request):
-    user=User.objects.filter(id=request.session['user_id'])
+    user=User.objects.filter(id=request.session['user_id'])[0]
     Puzzle.objects.create(
         title           = request.POST['title'],
         pieces_labeled  = request.POST['pieces_labeled'],

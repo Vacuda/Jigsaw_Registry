@@ -6,25 +6,38 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
-    <link rel="stylesheet" href="{% static 'home_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'puzzle_app/css/style.css' %}">
 
     <title>The Jigsaw Registry</title>
 </head>
 <body>
     <div class="container">
 
-        <h1>Home Page</h1>
 
-        {{request.session.first_name}}
-        <br>
 
-        <h1><a href="/puzzles/view/all">View Your Puzzles</a></h1>
+        
+            <div>
+                <div class="card-body">
+                    <h3 class="card-title">{{puzzle.title}}</h3>
+                </div>
+                <div class="full_size">
+                    <img class="lg" src="{{puzzle.picture.image.url}}" alt="...">
+                </div>
+                <a href="/puzzles/edit/{{puzzle.id}}" class="btn btn-primary">Edit Puzzle</a>
+            </div>
 
+       
+
+
+
+
+
+        <h1><a href="/">Home</a></h1>
 
         <h1><a href="/puzzles/add">Add Puzzle</a></h1>
-        <h1><a href="/projects/add">Add Project</a></h1>
 
-        <h1><a href="/login/logout">Log Out</a></h1>
+
+      
 
 
 

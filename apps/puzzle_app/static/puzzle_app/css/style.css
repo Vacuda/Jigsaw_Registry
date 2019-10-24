@@ -26,7 +26,27 @@
   margin: 5px auto;
 }
 
-img {
+.full_size {
+  position: relative;
+  width: 900px;
+  height: 650px;
+  overflow: hidden;
+  margin: 5px auto;
+  border-radius: 5px;
+}
+
+img.sm {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
+
+img.lg {
     position: absolute;
     left: 50%;
     top: 50%;

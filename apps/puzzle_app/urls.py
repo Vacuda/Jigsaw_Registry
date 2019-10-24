@@ -6,6 +6,7 @@ from . import views
 urlpatterns=[
     #/puzzles/
     url(r'^$', views.index),
+    url(r'^edit/(?P<puzzle_id>[0-9]+)$', views.edit_puzzle),
     url(r'^view/(?P<puzzle_id>[0-9]+)$', views.view_puzzle),
     url(r'^view/all$', views.view_all),
 
