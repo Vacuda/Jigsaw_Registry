@@ -8,30 +8,55 @@
     <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
     <link rel="stylesheet" href="{% static 'project_app/css/style.css' %}">
 
-    <title>The Jigsaw Registry - Puzzles</title>
+    <title>The Jigsaw Registry</title>
 </head>
 <body>
     <div class="container">
-        
-         <form action="/projects/create" method="POST"> {% csrf_token %}
 
-            <table>
-                <tr>
-                    <td class="table_name">Project Name:</td>
-                    <td class="table_input"><input type="text" name="name"></td>
-                </tr>
+        <h1>All Projects</h1>
 
-                <tr>
-                    <td class="table_name"></td>
-                    <td class="table_input">
-                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
-                    </td>
-                </tr>
+        {{request.session.first_name}}
+        <br>
 
-            </table>
-        </form>
+        {% for project in projects %}
+            <div class="card">
+                <div class="thumbnail">
+                    <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
+                </div>
+
+                <div class="card-body">
+                    <h3 class="card-title">{{project.name}}</h3>
+                    <p class="card-text">{{puzzle.pieces_actual}}</p>
+                    <a href="/projects/view/{{project.id}}" class="btn btn-primary">View Project</a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+
+
+
 
         <h1><a href="/">Home</a></h1>
+
+        <h1><a href="/projects/add">Add Project</a></h1>
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </div>

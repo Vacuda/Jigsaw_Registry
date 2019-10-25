@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, HttpResponse
 from apps.log_and_reg_app.models import User
 from apps.puzzle_app.models import Puzzle, Brand, Category, PuzzleImage
 
-def index(request):
-    return render(request, 'puzzle_app/index.html')
+# def index(request):
+#     return render(request, 'puzzle_app/index.html')
 
 def edit_puzzle(request, puzzle_id):
     if Puzzle.objects.filter(id=puzzle_id)[0].owned == True:
@@ -47,7 +47,7 @@ def view_puzzle(request, puzzle_id):
     }
     return render(request, 'puzzle_app/puzzle_view_page.html', context)
 
-def view_all(request):
+def view_all_puzzles(request):
 
     context = {
         "puzzles": Puzzle.objects.filter(belongs_to=request.session['user_id']),
@@ -62,6 +62,7 @@ def add_puzzle_page(request):
     return render(request, 'puzzle_app/puzzle_add_page.html')
 
 def create_puzzle(request):
+
     user=User.objects.filter(id=request.session['user_id'])[0]
     Puzzle.objects.create(
         title           = request.POST['title'],
@@ -69,9 +70,14 @@ def create_puzzle(request):
         pieces_actual   = request.POST['pieces_labeled'],
         belongs_to      = user,
         )
+    #default picture
+    p=Puzzle.objects.last()
+    pi=PuzzleImage.objects.create(image="puzzle_images/puzzle_default.png")
+    p.picture = pi
+    p.save()
 
-    c=Puzzle.objects.last().id
-    return redirect(f'/puzzles/create/{c}/success')
+    pid=Puzzle.objects.last().id
+    return redirect(f'/puzzles/create/{pid}/success')
 
 def success_create_puzzle(request, puzzle_id):
 
@@ -93,7 +99,6 @@ def guided_title(request, puzzle_id):
 def guided_picture(request, puzzle_id):
     context = {
         "puzzle": Puzzle.objects.filter(id=puzzle_id)[0],
-        # "images": PuzzleImage.objects.all()
     }
     return render(request, 'puzzle_app/guided_picture.html', context)
 
@@ -172,7 +177,8 @@ def guided_title_post(request, puzzle_id):
     return redirect(f'/puzzles/guided/{puzzle_id}/title')
 
 def guided_picture_post(request, puzzle_id):
-
+    print(request.FILES['picture'])
+    print("*"*50)
     # Uploads Picture
     PuzzleImage.objects.create(image = request.FILES['picture'])
 

@@ -12,24 +12,42 @@
 </head>
 <body>
     <div class="container">
-        
-         <form action="/projects/create" method="POST"> {% csrf_token %}
+        <br>
+        <br>
+
 
             <table>
-                <tr>
-                    <td class="table_name">Project Name:</td>
-                    <td class="table_input"><input type="text" name="name"></td>
-                </tr>
 
                 <tr>
-                    <td class="table_name"></td>
-                    <td class="table_input">
-                        <button type="submit" class="btn btn-md btn-primary">Submit</button>
+                    <td class="table_name">Puzzle On Project:</td>
+                    <td>
+                        {{project.puzzles.all.0.title}}
                     </td>
                 </tr>
-
             </table>
-        </form>
+
+            <div class="division"></div>
+
+            
+            {% for puzzle in puzzles %}
+                <div class="card">
+                    <div class="thumbnail">
+                        <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
+                    </div>
+
+                    <div class="card-body">
+                        <h3 class="card-title">{{puzzle.title}}</h3>
+                        <p class="card-text">{{puzzle.pieces_actual}}</p>
+                        <a href="/projects/guided/{{project.id}}/puzzles_get/{{puzzle.id}}" class="btn btn-primary">Add Puzzle To Project</a>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        <div class="division"></div>
+        
+        <a class="btn btn-sm btn-dark" href="/project/guided/{{project.id}}/helpers">Next</a>
+        <a href="/projects/edit/{{project.id}}">Full List!</a>
 
         <h1><a href="/">Home</a></h1>
 
