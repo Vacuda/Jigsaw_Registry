@@ -25,11 +25,18 @@ def view_all_projects(request):
     }
     return render(request, 'project_app/project_view_all_page.html', context)
 
-#######Adding a project
+#######Adding / Deleting a project
 
 def add_project_page(request):
 
     return render(request, 'project_app/project_add_page.html')
+
+def delete_project(request, project_id):
+
+    proj=Project.objects.filter(id=project_id)[0]
+    proj.delete()
+
+    return redirect(f'/projects/view/all')
 
 def create_project(request):
     user=User.objects.filter(id=request.session['user_id'])[0]

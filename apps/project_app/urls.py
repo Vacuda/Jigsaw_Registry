@@ -7,6 +7,7 @@ urlpatterns=[
     url(r'^edit/(?P<project_id>[0-9]+)$', views.edit_project),
     url(r'^view/(?P<project_id>[0-9]+)$', views.view_project),
     url(r'^view/all$', views.view_all_projects),
+    url(r'^delete/(?P<project_id>[0-9]+)$', views.delete_project),
 
     ## Add project
     url(r'^add$', views.add_project_page),
