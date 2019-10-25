@@ -6,40 +6,35 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
-    <link rel="stylesheet" href="{% static 'home_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'puzzle_app/css/style.css' %}">
 
-    <title>The Jigsaw Registry</title>
+    <title>The Jigsaw Registry - Puzzles</title>
 </head>
 <body>
     <div class="container">
 
-        <h1>Home Page</h1>
+            <h1>Time:</h1>
+            <!-- <form action="/puzzles/guided/{{puzzle.id}}/measures_post" method="POST"> {% csrf_token %}
+                <label for="width">Width:</label>
+                <input type="number" name="width" step="0.01" id="width" value="{{puzzle.width}}">
+                <label for="height">Height:</label>
+                <input type="number" name="height" step="0.01" id="height" value="{{puzzle.height}}">
 
-        {{request.session.first_name}}
-        <br>
+                <button type="submit" class="btn btn-lg btn-warning">Submit</button>
+            </form> -->
 
-        <h1><a href="/puzzles/view/all">View Your Puzzles</a></h1>
-        <h1><a href="/projects/view/all">View Your Projects</a></h1>
-
-
-        <h1>Stats</h1>
-        <h1><a href="/puzzles/add">Add Puzzle</a></h1>
-        <h1><a href="/projects/add">Add Project</a></h1>
-
-        <h1><a href="/login/logout">Log Out</a></h1>
-
-
-
-
-
-
+            <h3>Started_at:</h3>
+            <ul>
+                <li>{{project.started_at}}</li>
+            </ul>
+            <h3>Finished_at:</h3>
+            <ul>
+                <li>{{project.finished_at}}</li>
+            </ul>
 
 
-
-
-
-
-
+      
+        <a class="btn btn-sm btn-dark" href="/projects/edit/{{project.id}}">Done</a>
 
 
 

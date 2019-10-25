@@ -16,25 +16,41 @@
         <h1>All Projects</h1>
 
         {{request.session.first_name}}
-        <br>
+        
+        <div class="division"></div>
 
         {% for project in projects %}
             <div class="card">
+                <h3 class="card-title">{{project.name}}</h3>
+                    {% if project.finished == True %}
+                        <p class="finished">Complete</p>
+                    {% else %}
+                        <p class="not_finished">Unfinished!</p>
+                    {% endif %}
+                {% if project.puzzles.all|length == 0%}
+                    <div class="thumbnail">
+                        <img class="sm" src="{% static 'project_app/images/puzzle_non_selected.png' %}" alt="...">
+                    </div>
+                    <p class="card-text">None</p>
+                    <p class="card-text">None</p>
+                {% endif %}
+                {% for puzzle in project.puzzles.all %}
                 <div class="thumbnail">
                     <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
                 </div>
-
+                <p class="card-text">{{puzzle.title}}</p>
+                <p class="card-text">{{puzzle.pieces_labeled}}</p>
+                {% endfor %}
                 <div class="card-body">
-                    <h3 class="card-title">{{project.name}}</h3>
-                    <p class="card-text">{{puzzle.pieces_actual}}</p>
                     <a href="/projects/view/{{project.id}}" class="btn btn-primary">View Project</a>
+
                 </div>
             </div>
 
         {% endfor %}
 
 
-
+        <div class="division"></div>
 
 
         <h1><a href="/">Home</a></h1>

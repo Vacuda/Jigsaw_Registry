@@ -64,6 +64,26 @@ img.lg {
     margin: 10px auto;
 }
 
+.finished {
+    background-color: rgb(34, 34, 34);
+    color: white;
+    display: inline-block;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.not_finished {
+    background-color: darkgreen;
+    color: white;
+    display: inline-block;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+.card-title {
+    display: inline-block;
+}
+
 
 
 

@@ -8,48 +8,65 @@
     <link rel="stylesheet" href="{% static 'home_app/css/overall.css' %}">
     <link rel="stylesheet" href="{% static 'project_app/css/style.css' %}">
 
-    <title>The Jigsaw Registry - Puzzles</title>
+    <title>The Jigsaw Registry</title>
 </head>
 <body>
     <div class="container">
-        <br>
-        <br>
 
 
-            <table>
 
-                <tr>
-                    <td class="table_name">Puzzle On Project:</td>
-                    <td>
-                        {{project.puzzles.all.0.title}}
-                    </td>
-                </tr>
-            </table>
-
-            <div class="division"></div>
-
-            
-            {% for puzzle in puzzles %}
-                <div class="card">
-                    <div class="thumbnail">
-                        <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
-                    </div>
-
-                    <div class="card-body">
-                        <h3 class="card-title">{{puzzle.title}}</h3>
-                        <p class="card-text">{{puzzle.pieces_actual}}</p>
-                        <a href="/projects/guided/{{project.id}}/puzzles_get/{{puzzle.id}}" class="btn btn-primary">Add Puzzle To Project</a>
-                    </div>
-                </div>
-
-            {% endfor %}
-
-        <div class="division"></div>
         
-        <a class="btn btn-sm btn-dark" href="/project/guided/{{project.id}}/helpers">Next</a>
-        <a href="/projects/edit/{{project.id}}">Full List!</a>
+        <div class="card">
+            <h3 class="card-title">{{project.name}}</h3>
+                {% if project.finished == True %}
+                    <p class="finished">Complete</p>
+                {% else %}
+                    <p class="not_finished">Unfinished!</p>
+                {% endif %}
+            {% if project.puzzles.all|length == 0%}
+                <div class="thumbnail">
+                    <img class="sm" src="{% static 'project_app/images/puzzle_non_selected.png' %}" alt="...">
+                </div>
+                <p class="card-text">None</p>
+                <p class="card-text">None</p>
+            {% endif %}
+            {% for puzzle in project.puzzles.all %}
+            <div class="thumbnail">
+                <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
+            </div>
+            <p class="card-text">{{puzzle.title}}</p>
+            <p class="card-text">{{puzzle.pieces_labeled}}</p>
+            {% endfor %}
+            <div class="card-body">
+                <a href="/projects/edit/{{project.id}}" class="btn btn-primary">Edit Project</a>
+
+            </div>
+        </div>
+
+
+
+
 
         <h1><a href="/">Home</a></h1>
+
+        <h1><a href="/puzzles/add">Add Puzzle</a></h1>
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </div>

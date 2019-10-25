@@ -17,10 +17,66 @@
             <tr>
                 <td>Project:</td>
                 <td>{{project.name}}</td>
-                <td><a href="/project/guided/{{project.id}}/title">Edit</a></td>
+                <td><a href="/projects/guided/{{project.id}}/name">Edit</a></td>
+            </tr>
+            {% for puzzle in project.puzzles.all %}
+            <tr>
+                <td>Puzzle Name:</td>
+                <td>{{puzzle.title}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Puzzle Pieces:</td>
+                <td>{{puzzle.pieces_labeled}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Puzzle Picture:</td>
+                <td>
+                    <div class="thumbnail">
+                            <img class="sm" src="{{puzzle.picture.image.url}}" alt="...">
+                        </div>
+                </td>
+                <td><a href="/projects/guided/{{project.id}}/puzzles">Edit</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td>Helpers:</td>
+                <td>
+                    <ul></ul>
+                    {% for helper in project.helpers.all %}
+                        <li>{{helper.first_name}} {{helper.last_name}}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td><a href="/projects/guided/{{project.id}}/helpers">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Started at:</td>
+                <td>Start Time and Date</td>
+                <td><a href="/projects/guided/{{project.id}}/time">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Finished at:</td>
+                <td>End Time and Date</td>
+                <td><a href="/projects/guided/{{project.id}}/time">Edit</a></td>
+            </tr>
+            <tr>
+                <td>Completion:</td>
+                {% if project.finished == True %}
+                    <td>Completed</td>
+                {% else %}
+                    <td>Unfinished</td>
+                {% endif %}
+                <td></td>
             </tr>
 
-           
+
+
+
+
+
+
 
         </table>
 
