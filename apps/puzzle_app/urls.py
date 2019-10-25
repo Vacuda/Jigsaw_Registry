@@ -14,6 +14,7 @@ urlpatterns=[
     url(r'^add$', views.add_puzzle_page),
     url(r'^create$', views.create_puzzle),
     url(r'^create/(?P<puzzle_id>[0-9]+)/success$', views.success_create_puzzle),
+    url(r'^delete/(?P<puzzle_id>[0-9]+)$', views.delete_puzzle),
     
     ## Guided -pages-
     url(r'^guided/(?P<puzzle_id>[0-9]+)/title$', views.guided_title),

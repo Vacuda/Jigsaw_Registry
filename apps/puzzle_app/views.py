@@ -55,11 +55,16 @@ def view_all_puzzles(request):
 
     return render(request, 'puzzle_app/puzzle_view_all_page.html', context)
 
-#######Adding a puzzle
+#######Adding / Deleting a puzzle
 
 def add_puzzle_page(request):
 
     return render(request, 'puzzle_app/puzzle_add_page.html')
+
+def delete_puzzle(request, puzzle_id):
+    puzz = Puzzle.objects.filter(id=puzzle_id)[0]
+    puzz.delete()
+    return redirect(f'/puzzles/view/all')
 
 def create_puzzle(request):
 
